@@ -1,12 +1,14 @@
 package the_game.input;
 
-import java.awt.*;
-
 public class Controller {
     public double x, y, z, rotation, xa, za, rotationa;
     public static boolean turnLeft = false;
     public static boolean turnRight = false;
-    public static double rotationSpeedBoost = 0;
+    public static boolean turnUp = false;
+    public static boolean turnDown = false;
+    public static double rotationx = 0;
+    public static double rotationSpeedBoostX = 0;
+    public static double rotationSpeedBoostY = 0;
 
     public void tick(boolean forward, boolean back, boolean right, boolean left, boolean jump, boolean crouch, boolean run, boolean exit) {
         double rotationSpeed = 0.01;
@@ -38,11 +40,20 @@ public class Controller {
         }
 
         if (turnLeft) {
-            rotationa += (rotationSpeed * rotationSpeedBoost);
+            rotationa += (rotationSpeed * rotationSpeedBoostX);
+            System.out.println("lefy");
         }
 
         if (turnRight) {
-            rotationa -= (rotationSpeed * rotationSpeedBoost);
+            rotationa -= (rotationSpeed * rotationSpeedBoostX);
+        }
+
+        if (turnUp) {
+            rotationx -= (rotationSpeed * rotationSpeedBoostY * 0.5);
+        }
+
+        if (turnDown) {
+            rotationx += (rotationSpeed * rotationSpeedBoostY * 0.5);
         }
 
         if (jump) {

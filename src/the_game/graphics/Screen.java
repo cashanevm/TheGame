@@ -30,7 +30,7 @@ public class Screen extends Render{
         //int animY = (int) (Math.cos(game.time % 2000.0 / 2000 * Math.PI * 2) * 200);
 
         render.floor(game);
-        render.renderWall(0, 0.5, 1.5, 1.5,0);
+       //  render.renderWall(0, 0.5, 1.5, 1.5,0);
         draw(render,0,0);
         //draw(test,  (width - 256) / 2 + animX , (height - 256) / 2 + animY);
 

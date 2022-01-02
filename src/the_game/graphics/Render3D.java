@@ -1,9 +1,12 @@
 package the_game.graphics;
 
 import the_game.Game;
+import the_game.input.Controller;
 
 import java.util.Random;
 import java.util.WeakHashMap;
+
+import static java.lang.Math.sin;
 
 public class Render3D extends Render{
 
@@ -11,10 +14,18 @@ public class Render3D extends Render{
 
     public Render3D(int width, int height) {
         super(width, height);
+        Controller.rotationx = 0;
     }
 
     public void floor(Game game) {
-        double test = Math.cos(game.time / 25.0);
+        double rotationX = Math.cos(game.controllers.rotationx) + 1;
+        double positionX = height/2 + rotationX * height;
+        double dinamic =
+                //rotationX *
+                height + game.controllers.rotationx * 1000;
+                //* 12;
+
+        //System.out.println(game.controllers.rotationx * 10);
 
         double floorPosition = 10;
         double ceilingPosition = 20;
@@ -25,14 +36,14 @@ public class Render3D extends Render{
 
         double rotation = game.controllers.rotation;
         cosine = Math.cos(rotation);
-        sine = Math.sin(rotation);
+        sine = sin(rotation);
 
         for (int y = 0; y < height; y++) {
-            double ceiling = (y + -height / 2.0) / height;
+            double ceiling = (y + -dinamic / 2.0) / height;
 
             double z = (floorPosition + up) / ceiling;
 
-            if (ceiling < 0) z = (ceilingPosition - up) / -ceiling;
+            //if (ceiling > 0)  z = (ceilingPosition - up) / -ceiling;
 
             for (int x = 0; x < width; x++) {
                 int pixIndex = x + y * width;
@@ -40,20 +51,20 @@ public class Render3D extends Render{
                 double depth = (x - width / 2.0) / height;
                 depth *= z;
                 //+
-                double xx = (depth * cosine + z * sine) ;
-                double yy = (z * cosine - depth * sine) ;
-
-
-
+                double xx = (depth * cosine + z * sine);
+                double yy = (z * cosine - depth * sine);
 
                 int xPix = (int) (xx + right) & 15;
                 int yPix = (int) (yy + forward) & 15;
 
-                pixels[pixIndex] = - Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
+                if (ceiling > 0) {
+            pixels[pixIndex] = - Texture.floor.pixels[(xPix & 7) + (yPix & 7)*8] ;
+            } else pixels[pixIndex] = 0;
 
-                if (z > height / 4.0 ) {
-                    pixels[pixIndex] = 1;
-                }
+
+//                if (z <100) {
+//                    pixels[pixIndex] = 1;
+//                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package the_game.display;
 
 import the_game.Game;
+import the_game.input.Chaker;
 import the_game.input.Controller;
 import the_game.input.InputHandler;
 import the_game.graphics.Render;
@@ -81,8 +82,8 @@ public class Display extends Canvas implements Runnable{
         frame.setTitle(DISPLAY_TITLE);
         frame.setResizable(false);
         frame.setVisible(true);
-
         display.start();
+        display.requestFocusInWindow();
     }
 
     @Override
@@ -93,6 +94,12 @@ public class Display extends Canvas implements Runnable{
         double secondsPerTick = 1/60.0;
         int tickCount = 0;
         boolean ticked = false;
+
+//        Chaker anotherRun = new Chaker();
+//        Thread childTread = new Thread(anotherRun);
+//        childTread.start();
+
+        mouse.moveToCenter();
 
         while (running) {
             long currentTime =  System.nanoTime();
